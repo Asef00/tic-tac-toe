@@ -11,8 +11,8 @@ function App() {
       <div className="rounded-lg bg-black p-5 mb-10">
         {/* players */}
         <ol className="flex gap-10 justify-center mb-10">
-          <Player name={player1} symbol="X" />
-          <Player name={player2} symbol="O" />
+          <Player initialName={player1} symbol="X" />
+          <Player initialName={player2} symbol="O" />
         </ol>
         game board
       </div>

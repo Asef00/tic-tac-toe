@@ -1,31 +1,39 @@
 import { useState } from 'react'
 
 type Props = {
-  name: string
+  initialName: string
   symbol: string
 }
 
-export default function Player({ name, symbol }: Props) {
+export default function Player({ initialName, symbol }: Props) {
   const [isEditing, setIsEditing] = useState(false)
+  const [playerName, setPlayerName] = useState(initialName)
 
   function handleEditClick() {
     setIsEditing((editing) => !editing)
   }
 
-  let playerName = <span className="w-24 leading-10 text-center">{name}</span>
+  function handleNameEdit(event: React.ChangeEvent<HTMLInputElement>) {
+    setPlayerName(event.target.value)
+  }
+
+  let playerNameMarkup = (
+    <span className="w-24 leading-10 text-center">{playerName}</span>
+  )
   if (isEditing) {
-    playerName = (
+    playerNameMarkup = (
       <input
+        onChange={handleNameEdit}
         className="w-24 leading-10 text-center bg-slate-800"
         type="text"
-        value={name}
+        value={playerName}
       />
     )
   }
 
   return (
     <li className="flex items-center gap-10">
-      {playerName}
+      {playerNameMarkup}
 
       {symbol}
       <button
