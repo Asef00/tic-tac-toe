@@ -13,7 +13,7 @@ export default function Player({ initialName, symbol }: Props) {
     setIsEditing((editing) => !editing)
   }
 
-  function handleNameEdit(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     setPlayerName(event.target.value)
   }
 
@@ -23,7 +23,7 @@ export default function Player({ initialName, symbol }: Props) {
   if (isEditing) {
     playerNameMarkup = (
       <input
-        onChange={handleNameEdit}
+        onChange={handleNameChange}
         className="w-24 leading-10 text-center bg-slate-800"
         type="text"
         value={playerName}
