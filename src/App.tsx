@@ -1,7 +1,24 @@
+import { useState } from 'react'
 import './App.css'
+import Player from './components/Player'
 
 function App() {
-  return <p>coming soon...</p>
+  const [player1, setPlayer1] = useState('Player 1')
+  const [player2, setPlayer2] = useState('Player 2')
+
+  return (
+    <main>
+      <div className="rounded-lg bg-black p-5 mb-10">
+        {/* players */}
+        <ol className="flex gap-10 justify-center mb-10">
+          <Player name={player1} symbol="X" />
+          <Player name={player2} symbol="O" />
+        </ol>
+        game board
+      </div>
+      log
+    </main>
+  )
 }
 
 export default App
