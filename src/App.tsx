@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Player from './components/Player'
+import GameBoard from './components/GameBoard'
 
 function App() {
   const [player1, setPlayer1] = useState('Player 1')
@@ -14,7 +15,8 @@ function App() {
           <Player initialName={player1} symbol="X" />
           <Player initialName={player2} symbol="O" />
         </ol>
-        game board
+        {/* game board */}
+        <GameBoard />
       </div>
       log
     </main>
