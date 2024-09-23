@@ -21,14 +21,8 @@ export default function GameBoard({ turns, onChangePlayer }: Props) {
     gameBoard[row][col] = player
   }
 
-  function handleCellClick(
-    rowIndex: number,
-    colIndex: number,
-    cellValue: 'x' | 'o' | null
-  ) {
-    if (cellValue === null) {
-      onChangePlayer(colIndex, rowIndex)
-    }
+  function handleCellClick(rowIndex: number, colIndex: number) {
+    onChangePlayer(colIndex, rowIndex)
   }
 
   return (
@@ -39,7 +33,8 @@ export default function GameBoard({ turns, onChangePlayer }: Props) {
             {row.map((symbol, cellIndex) => (
               <li key={cellIndex}>
                 <button
-                  onClick={() => handleCellClick(rowIndex, cellIndex, symbol)}
+                  disabled={symbol !== null}
+                  onClick={() => handleCellClick(rowIndex, cellIndex)}
                   className="w-24 h-24 uppercase text-6xl font-bold bg-gray-500 hover:bg-gray-600 duration-100"
                 >
                   {symbol}
