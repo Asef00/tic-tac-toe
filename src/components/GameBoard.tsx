@@ -1,18 +1,25 @@
-import { useState } from 'react'
+import { GameTurn } from '../types/types'
 
-const initialGameBoard = [
+const initialGameBoard: Array<Array<string | null>> = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ]
 
 type Props = {
-  activePlayer: string
-  changePlayer: (c: number, r: number) => void
+  turns: GameTurn[]
+  onChangePlayer: (c: number, r: number) => void
 }
 
-export default function GameBoard({ activePlayer, changePlayer }: Props) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard)
+export default function GameBoard({ turns, onChangePlayer }: Props) {
+  const gameBoard = initialGameBoard
+
+  for (const turn of turns) {
+    const { square, player } = turn
+    const { row, col } = square
+
+    gameBoard[row][col] = player
+  }
 
   function handleCellClick(
     rowIndex: number,
@@ -20,15 +27,7 @@ export default function GameBoard({ activePlayer, changePlayer }: Props) {
     cellValue: string | null
   ) {
     if (cellValue === null) {
-      setGameBoard((prevGameBoard) => {
-        //deep copy
-        const updatedBoard = [
-          ...prevGameBoard.map((innerArray) => [...innerArray]),
-        ]
-        updatedBoard[rowIndex][colIndex] = activePlayer
-        return updatedBoard
-      })
-      changePlayer(colIndex, rowIndex)
+      onChangePlayer(colIndex, rowIndex)
     }
   }
 

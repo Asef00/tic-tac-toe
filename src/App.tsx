@@ -15,6 +15,7 @@ function App() {
       if (prevPlayer === 'x') return 'o'
       else return 'x'
     })
+
     //log the activity
     setGameTurns((prevGameTurns) => {
       //compute current player to not mixing different states
@@ -46,8 +47,8 @@ function App() {
         </ol>
         {/* game board */}
         <GameBoard
-          changePlayer={(c: number, r: number) => handlePlayerMove(c, r)}
-          activePlayer={activePlayer}
+          onChangePlayer={(c: number, r: number) => handlePlayerMove(c, r)}
+          turns={gameTurns}
         />
       </div>
       <Log turns={gameTurns} />
