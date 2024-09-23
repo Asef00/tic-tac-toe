@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 type Props = {
   initialName: string
-  symbol: string
+  symbol: 'x' | 'o'
   isActive: boolean
 }
 

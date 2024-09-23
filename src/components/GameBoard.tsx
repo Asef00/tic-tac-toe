@@ -1,6 +1,6 @@
 import { GameTurn } from '../types/types'
 
-const initialGameBoard: Array<Array<string | null>> = [
+const initialGameBoard: Array<Array<'x' | 'o' | null>> = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
@@ -24,7 +24,7 @@ export default function GameBoard({ turns, onChangePlayer }: Props) {
   function handleCellClick(
     rowIndex: number,
     colIndex: number,
-    cellValue: string | null
+    cellValue: 'x' | 'o' | null
   ) {
     if (cellValue === null) {
       onChangePlayer(colIndex, rowIndex)
@@ -40,7 +40,7 @@ export default function GameBoard({ turns, onChangePlayer }: Props) {
               <li key={cellIndex}>
                 <button
                   onClick={() => handleCellClick(rowIndex, cellIndex, symbol)}
-                  className="w-24 h-24 text-6xl font-bold bg-gray-500 hover:bg-gray-600 duration-100"
+                  className="w-24 h-24 uppercase text-6xl font-bold bg-gray-500 hover:bg-gray-600 duration-100"
                 >
                   {symbol}
                 </button>
