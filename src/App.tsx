@@ -2,14 +2,21 @@ import './App.css'
 import Player from './components/Player'
 import GameBoard from './components/GameBoard'
 import { useState } from 'react'
+import Log from './components/Log'
 
 function App() {
   const [activePlayer, setActivePlayer] = useState('x')
+  const [gameTurns, setGameTurns] = useState([] as string[])
 
-  function handlePlayerChange() {
+  function handlePlayerMove() {
+    //change active player
     setActivePlayer((prevPlayer) => {
       if (prevPlayer === 'x') return 'o'
       else return 'x'
+    })
+    //log the activity
+    setGameTurns((prevGameTurns) => {
+      return ['new turn', ...prevGameTurns]
     })
   }
 
@@ -31,11 +38,11 @@ function App() {
         </ol>
         {/* game board */}
         <GameBoard
-          changePlayer={handlePlayerChange}
+          changePlayer={handlePlayerMove}
           activePlayer={activePlayer}
         />
       </div>
-      log
+      <Log turns={gameTurns} />
     </main>
   )
 }
