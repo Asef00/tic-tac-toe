@@ -3,9 +3,10 @@ import { useState } from 'react'
 type Props = {
   initialName: string
   symbol: string
+  isActive: boolean
 }
 
-export default function Player({ initialName, symbol }: Props) {
+export default function Player({ initialName, symbol, isActive }: Props) {
   const [isEditing, setIsEditing] = useState(false)
   const [playerName, setPlayerName] = useState(initialName)
 
@@ -32,12 +33,16 @@ export default function Player({ initialName, symbol }: Props) {
   }
 
   return (
-    <li className="flex items-center gap-10">
+    <li
+      className={`flex items-center gap-10 rounded-sm duration-100 ${
+        isActive ? 'outline outline-orange-400' : ''
+      }`}
+    >
       {playerNameMarkup}
 
       {symbol}
       <button
-        className="hover:text-orange-500 duration-100"
+        className="hover:text-orange-500 duration-100 px-4"
         onClick={handleEditClick}
       >
         {isEditing ? 'Save' : 'Edit'}
