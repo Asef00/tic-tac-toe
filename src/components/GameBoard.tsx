@@ -1,4 +1,4 @@
-import { act, useState } from 'react'
+import { useState } from 'react'
 
 const initialGameBoard = [
   [null, null, null],
@@ -8,7 +8,7 @@ const initialGameBoard = [
 
 type Props = {
   activePlayer: string
-  changePlayer: () => void
+  changePlayer: (c: number, r: number) => void
 }
 
 export default function GameBoard({ activePlayer, changePlayer }: Props) {
@@ -28,7 +28,7 @@ export default function GameBoard({ activePlayer, changePlayer }: Props) {
         updatedBoard[rowIndex][colIndex] = activePlayer
         return updatedBoard
       })
-      changePlayer()
+      changePlayer(colIndex, rowIndex)
     }
   }
 

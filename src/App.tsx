@@ -3,12 +3,13 @@ import Player from './components/Player'
 import GameBoard from './components/GameBoard'
 import { useState } from 'react'
 import Log from './components/Log'
+import { GameTurn } from './types/types'
 
 function App() {
   const [activePlayer, setActivePlayer] = useState('x')
-  const [gameTurns, setGameTurns] = useState([] as string[])
+  const [gameTurns, setGameTurns] = useState([] as GameTurn[])
 
-  function handlePlayerMove() {
+  function handlePlayerMove(colIndex: number, rowIndex: number) {
     //change active player
     setActivePlayer((prevPlayer) => {
       if (prevPlayer === 'x') return 'o'
@@ -16,7 +17,14 @@ function App() {
     })
     //log the activity
     setGameTurns((prevGameTurns) => {
-      return ['new turn', ...prevGameTurns]
+      //compute current player to not mixing different states
+      let currentPlayer = 'x'
+      if (prevGameTurns.length && prevGameTurns[0].player) currentPlayer = 'o'
+
+      return [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevGameTurns,
+      ]
     })
   }
 
@@ -38,7 +46,7 @@ function App() {
         </ol>
         {/* game board */}
         <GameBoard
-          changePlayer={handlePlayerMove}
+          changePlayer={(c: number, r: number) => handlePlayerMove(c, r)}
           activePlayer={activePlayer}
         />
       </div>
