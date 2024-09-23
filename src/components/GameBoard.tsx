@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { act, useState } from 'react'
 
 const initialGameBoard = [
   [null, null, null],
@@ -6,7 +6,12 @@ const initialGameBoard = [
   [null, null, null],
 ]
 
-export default function GameBoard() {
+type Props = {
+  activePlayer: string
+  changePlayer: () => void
+}
+
+export default function GameBoard({ activePlayer, changePlayer }: Props) {
   const [gameBoard, setGameBoard] = useState(initialGameBoard)
 
   function handleCellClick(
@@ -20,9 +25,10 @@ export default function GameBoard() {
         const updatedBoard = [
           ...prevGameBoard.map((innerArray) => [...innerArray]),
         ]
-        updatedBoard[rowIndex][colIndex] = 'X'
+        updatedBoard[rowIndex][colIndex] = activePlayer
         return updatedBoard
       })
+      changePlayer()
     }
   }
 

@@ -1,8 +1,18 @@
 import './App.css'
 import Player from './components/Player'
 import GameBoard from './components/GameBoard'
+import { useState } from 'react'
 
 function App() {
+  const [activePlayer, setActivePlayer] = useState('x')
+
+  function handlePlayerChange() {
+    setActivePlayer((prevPlayer) => {
+      if (prevPlayer === 'x') return 'o'
+      else return 'x'
+    })
+  }
+
   return (
     <main>
       <div className="rounded-lg bg-black p-5 mb-10">
@@ -12,7 +22,10 @@ function App() {
           <Player initialName="Player 2" symbol="O" />
         </ol>
         {/* game board */}
-        <GameBoard />
+        <GameBoard
+          changePlayer={handlePlayerChange}
+          activePlayer={activePlayer}
+        />
       </div>
       log
     </main>
