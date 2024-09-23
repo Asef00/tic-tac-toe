@@ -9,8 +9,8 @@ export default function Log({ turns }: Props) {
     <ol>
       {turns.map((turn) => {
         return (
-          <li>
-            {turn.player} moved on col {turn.square.col} | row {turn.square.row}
+          <li key={`${turn.square.row}${turn.square.col}`}>
+            {turn.player} selected {turn.square.col}, {turn.square.row}
           </li>
         )
       })}
