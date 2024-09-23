@@ -41,7 +41,7 @@ export default function GameBoard({ activePlayer, changePlayer }: Props) {
               <li key={cellIndex}>
                 <button
                   onClick={() => handleCellClick(rowIndex, cellIndex, symbol)}
-                  className="w-24 h-24 text-6xl bg-gray-500 hover:bg-gray-600 duration-100"
+                  className="w-24 h-24 text-6xl font-bold bg-gray-500 hover:bg-gray-600 duration-100"
                 >
                   {symbol}
                 </button>
