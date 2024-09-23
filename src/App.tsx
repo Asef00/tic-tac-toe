@@ -5,22 +5,21 @@ import { useState } from 'react'
 import Log from './components/Log'
 import { GameTurn } from './types/types'
 
+function deriveActivePlayer(gameTurns: GameTurn[]) {
+  let currentPlayer = 'x'
+  if (gameTurns.length && gameTurns[0].player) currentPlayer = 'o'
+
+  return currentPlayer
+}
+
 function App() {
-  const [activePlayer, setActivePlayer] = useState('x')
   const [gameTurns, setGameTurns] = useState([] as GameTurn[])
 
-  function handlePlayerMove(colIndex: number, rowIndex: number) {
-    //change active player
-    setActivePlayer((prevPlayer) => {
-      if (prevPlayer === 'x') return 'o'
-      else return 'x'
-    })
+  const activePlayer = deriveActivePlayer(gameTurns)
 
-    //log the activity
+  function handlePlayerMove(colIndex: number, rowIndex: number) {
     setGameTurns((prevGameTurns) => {
-      //compute current player to not mixing different states
-      let currentPlayer = 'x'
-      if (prevGameTurns.length && prevGameTurns[0].player) currentPlayer = 'o'
+      const currentPlayer = deriveActivePlayer(prevGameTurns)
 
       return [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
@@ -37,12 +36,12 @@ function App() {
           <Player
             isActive={activePlayer === 'x'}
             initialName="Player 1"
-            symbol="X"
+            symbol="x"
           />
           <Player
             isActive={activePlayer === 'o'}
             initialName="Player 2"
-            symbol="O"
+            symbol="o"
           />
         </ol>
         {/* game board */}
