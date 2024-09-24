@@ -22,10 +22,15 @@ function deriveActivePlayer(gameTurns: GameTurn[]) {
 
 function App() {
   const [gameTurns, setGameTurns] = useState([] as GameTurn[])
+
+  function handleRematch() {
+    setGameTurns([])
+  }
+
   // computed active player
   const activePlayer = deriveActivePlayer(gameTurns)
-
-  const gameBoard = initialGameBoard
+  //clone a deep copy
+  const gameBoard = [...initialGameBoard.map((innerArray) => [...innerArray])]
   //filling into the gameBoard
   for (const turn of gameTurns) {
     const { square, player } = turn
@@ -84,7 +89,9 @@ function App() {
           board={gameBoard}
         />
         {/* game over */}
-        {(winner || hasDraw) && <GameOver winner={winner} />}
+        {(winner || hasDraw) && (
+          <GameOver winner={winner} onRematch={handleRematch} />
+        )}
       </div>
       <Log turns={gameTurns} />
     </main>
