@@ -67,17 +67,29 @@ function App() {
     })
   }
 
+  const [players, setPlayers] = useState({ x: 'Player 1', o: 'Player 2' })
+
+  function handleNameChange(name: string, key: 'x' | 'o') {
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers
+      updatedPlayers[key] = name
+      return updatedPlayers
+    })
+  }
+
   return (
     <main>
       <div className="rounded-lg bg-black p-5 mb-10 relative">
         {/* players */}
         <ol className="flex gap-10 justify-center mb-10">
           <Player
+            onNameChange={(name) => handleNameChange(name, 'x')}
             isActive={activePlayer === 'x'}
             initialName="Player 1"
             symbol="x"
           />
           <Player
+            onNameChange={(name) => handleNameChange(name, 'o')}
             isActive={activePlayer === 'o'}
             initialName="Player 2"
             symbol="o"
@@ -90,7 +102,7 @@ function App() {
         />
         {/* game over */}
         {(winner || hasDraw) && (
-          <GameOver winner={winner} onRematch={handleRematch} />
+          <GameOver winner={players[winner]} onRematch={handleRematch} />
         )}
       </div>
       <Log turns={gameTurns} />

@@ -4,9 +4,15 @@ type Props = {
   initialName: string
   symbol: 'x' | 'o'
   isActive: boolean
+  onNameChange: (name: string) => void
 }
 
-export default function Player({ initialName, symbol, isActive }: Props) {
+export default function Player({
+  initialName,
+  symbol,
+  isActive,
+  onNameChange,
+}: Props) {
   const [isEditing, setIsEditing] = useState(false)
   const [playerName, setPlayerName] = useState(initialName)
 
@@ -16,6 +22,7 @@ export default function Player({ initialName, symbol, isActive }: Props) {
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     setPlayerName(event.target.value)
+    onNameChange(event.target.value)
   }
 
   let playerNameMarkup = (
