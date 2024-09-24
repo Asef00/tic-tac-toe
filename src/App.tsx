@@ -34,7 +34,7 @@ function App() {
     gameBoard[row][col] = player
   }
 
-  //check if the game is over
+  //check if we have winners
   let winner
   for (const combination of WINNING_COMBINATIONS) {
     const square1Symbol = gameBoard[combination[0].col][combination[0].row]
@@ -48,6 +48,8 @@ function App() {
     )
       winner = square1Symbol
   }
+
+  const hasDraw = !winner && gameTurns.length === 9
 
   function handlePlayerMove(colIndex: number, rowIndex: number) {
     setGameTurns((prevGameTurns) => {
@@ -82,10 +84,9 @@ function App() {
           board={gameBoard}
         />
         {/* game over */}
-        {winner && <GameOver />}
+        {(winner || hasDraw) && <GameOver winner={winner} />}
       </div>
       <Log turns={gameTurns} />
-      <p className="uppercase mt-4">{winner && `<< You won, ${winner} >>`}</p>
     </main>
   )
 }
