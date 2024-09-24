@@ -4,18 +4,49 @@ import GameBoard from './components/GameBoard'
 import { useState } from 'react'
 import Log from './components/Log'
 import { GameTurn } from './types/types'
+import { WINNING_COMBINATIONS } from './data'
+
+const initialGameBoard: Array<Array<'x' | 'o' | null>> = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+]
 
 function deriveActivePlayer(gameTurns: GameTurn[]) {
   let currentPlayer = 'x'
-  if (gameTurns.length && gameTurns[0].player) currentPlayer = 'o'
+  if (gameTurns.length && gameTurns[0].player === 'x') currentPlayer = 'o'
 
   return currentPlayer
 }
 
 function App() {
   const [gameTurns, setGameTurns] = useState([] as GameTurn[])
-
+  // computed active player
   const activePlayer = deriveActivePlayer(gameTurns)
+
+  const gameBoard = initialGameBoard
+  //filling into the gameBoard
+  for (const turn of gameTurns) {
+    const { square, player } = turn
+    const { row, col } = square
+
+    gameBoard[row][col] = player
+  }
+
+  //check if the game is over
+  let winner
+  for (const combination of WINNING_COMBINATIONS) {
+    const square1Symbol = gameBoard[combination[0].col][combination[0].row]
+    const square2Symbol = gameBoard[combination[1].col][combination[1].row]
+    const square3Symbol = gameBoard[combination[2].col][combination[2].row]
+
+    if (
+      square1Symbol &&
+      square1Symbol === square2Symbol &&
+      square1Symbol === square3Symbol
+    )
+      winner = square1Symbol
+  }
 
   function handlePlayerMove(colIndex: number, rowIndex: number) {
     setGameTurns((prevGameTurns) => {
@@ -47,10 +78,11 @@ function App() {
         {/* game board */}
         <GameBoard
           onChangePlayer={(c: number, r: number) => handlePlayerMove(c, r)}
-          turns={gameTurns}
+          board={gameBoard}
         />
       </div>
       <Log turns={gameTurns} />
+      <p className="uppercase mt-4">{winner && `<< You won, ${winner} >>`}</p>
     </main>
   )
 }

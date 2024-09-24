@@ -1,33 +1,16 @@
-import { GameTurn } from '../types/types'
-
-const initialGameBoard: Array<Array<'x' | 'o' | null>> = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-]
-
 type Props = {
-  turns: GameTurn[]
+  board: Array<Array<'x' | 'o' | null>>
   onChangePlayer: (c: number, r: number) => void
 }
 
-export default function GameBoard({ turns, onChangePlayer }: Props) {
-  const gameBoard = initialGameBoard
-
-  for (const turn of turns) {
-    const { square, player } = turn
-    const { row, col } = square
-
-    gameBoard[row][col] = player
-  }
-
+export default function GameBoard({ board, onChangePlayer }: Props) {
   function handleCellClick(rowIndex: number, colIndex: number) {
     onChangePlayer(colIndex, rowIndex)
   }
 
   return (
     <ol className="grid gap-10 content-center justify-center">
-      {gameBoard.map((row, rowIndex) => (
+      {board.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol className="grid grid-cols-3 gap-10">
             {row.map((symbol, cellIndex) => (
