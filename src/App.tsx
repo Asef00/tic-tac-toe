@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Log from './components/Log'
 import { GameTurn } from './types/types'
 import { WINNING_COMBINATIONS } from './data'
+import GameOver from './components/GameOver'
 
 const initialGameBoard: Array<Array<'x' | 'o' | null>> = [
   [null, null, null],
@@ -61,7 +62,7 @@ function App() {
 
   return (
     <main>
-      <div className="rounded-lg bg-black p-5 mb-10">
+      <div className="rounded-lg bg-black p-5 mb-10 relative">
         {/* players */}
         <ol className="flex gap-10 justify-center mb-10">
           <Player
@@ -80,6 +81,8 @@ function App() {
           onChangePlayer={(c: number, r: number) => handlePlayerMove(c, r)}
           board={gameBoard}
         />
+        {/* game over */}
+        {winner && <GameOver />}
       </div>
       <Log turns={gameTurns} />
       <p className="uppercase mt-4">{winner && `<< You won, ${winner} >>`}</p>
