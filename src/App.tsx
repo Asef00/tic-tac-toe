@@ -69,11 +69,9 @@ function App() {
 
   const [players, setPlayers] = useState({ x: 'Player 1', o: 'Player 2' })
 
-  function handleNameChange(name: string, key: 'x' | 'o') {
+  function handleNameChange(newName: string, key: 'x' | 'o') {
     setPlayers((prevPlayers) => {
-      const updatedPlayers = prevPlayers
-      updatedPlayers[key] = name
-      return updatedPlayers
+      return { ...prevPlayers, [key]: newName }
     })
   }
 
